@@ -1,0 +1,11 @@
+spring:
+    application:
+        name: ai-query-system
+
+server:
+    port: 8080
+
+openrouter:
+    api-key: YOUR_API_KEY
+    model: openrouter/auto
+    url: https://openrouter.ai/api/v1/chat/completions
