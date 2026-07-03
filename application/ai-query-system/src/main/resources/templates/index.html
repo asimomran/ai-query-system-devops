@@ -1,5 +1,42 @@
-<h1>🤖 AI Query System</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Query System</title>
 
-<p style="text-align:center;color:#666;margin-bottom:20px;">
-    Ask any question using OpenRouter AI
-</p>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>🤖 AI Query System</h1>
+
+        <p class="subtitle">
+            Ask anything. Powered by Spring Boot & OpenRouter AI.
+        </p>
+
+        <textarea
+                id="message"
+                maxlength="500"
+                placeholder="Ask me anything..."></textarea>
+
+        <button onclick="askAI()">
+            🚀 Ask AI
+        </button>
+
+        <div id="response">
+            Your AI response will appear here...
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

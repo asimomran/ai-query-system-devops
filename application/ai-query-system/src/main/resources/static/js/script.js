@@ -1,25 +1,47 @@
-async function askAI(){
+async function askAI() {
 
-    const message=document.getElementById("message").value;
+    const message = document.getElementById("message").value;
 
-    const response=await fetch("/api/chat",{
+    if(message.trim()===""){
 
-        method:"POST",
+        alert("Please enter a question");
 
-        headers:{
-            "Content-Type":"application/json"
-        },
+        return;
 
-        body:JSON.stringify({
+    }
 
-            message:message
+    const responseBox=document.getElementById("response");
 
-        })
+    responseBox.innerHTML="<div class='loading'>🤖 Thinking...</div>";
 
-    });
+    try{
 
-    const data=await response.json();
+        const response=await fetch("/api/chat",{
 
-    document.getElementById("response").innerText=data.response;
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+
+                message:message
+
+            })
+
+        });
+
+        const data=await response.json();
+
+        responseBox.innerHTML=data.response;
+
+    }
+
+    catch(e){
+
+        responseBox.innerHTML="<div class='error'>❌ Something went wrong.</div>";
+
+    }
 
 }
