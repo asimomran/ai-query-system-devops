@@ -1,46 +1,62 @@
-async function askAI() {
+.typing{
 
-    const message = document.getElementById("message").value;
+    display:flex;
 
-    if(message.trim()===""){
+    gap:6px;
 
-        alert("Please enter a question");
+    align-items:center;
 
-        return;
+}
+
+.typing span{
+
+    width:10px;
+
+    height:10px;
+
+    border-radius:50%;
+
+    background:#60a5fa;
+
+    animation:typing 1.2s infinite;
+
+}
+
+.typing span:nth-child(2){
+
+    animation-delay:.2s;
+
+}
+
+.typing span:nth-child(3){
+
+    animation-delay:.4s;
+
+}
+
+@keyframes typing{
+
+    0%{
+
+        opacity:.3;
+
+        transform:translateY(0);
 
     }
 
-    const responseBox=document.getElementById("response");
+    50%{
 
-    responseBox.innerHTML="<div class='loading'>🤖 Thinking...</div>";
+        opacity:1;
 
-    try{
-
-        const response=await fetch("/api/chat",{
-
-            method:"POST",
-
-            headers:{
-                "Content-Type":"application/json"
-            },
-
-            body:JSON.stringify({
-
-                message:message
-
-            })
-
-        });
-
-        const data=await response.json();
-
-        responseBox.innerHTML=data.response;
+        transform:translateY(-6px);
 
     }
 
-    catch(e){
+    100%{
 
-        responseBox.innerHTML="<div class='error'>❌ Something went wrong.</div>";
+        opacity:.3;
+
+        transform:translateY(0);
 
     }
 

@@ -1,36 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>AI Query System</title>
 
     <link rel="stylesheet" href="/css/style.css">
+
 </head>
+
 <body>
 
-<div class="container">
+<div class="background">
 
-    <div class="card">
+    <span></span>
+    <span></span>
+    <span></span>
 
-        <h1>🤖 AI Query System</h1>
+</div>
 
-        <p class="subtitle">
-            Ask anything. Powered by Spring Boot & OpenRouter AI.
-        </p>
+<div class="app">
+
+    <div class="top">
+
+        <h1>AI Query System</h1>
+
+        <p>Spring Boot • OpenRouter • DevOps Pipeline</p>
+
+    </div>
+
+    <div id="chat">
+
+        <div class="ai-message">
+
+            👋 Hello!
+
+            <br><br>
+
+            Ask me anything.
+
+        </div>
+
+    </div>
+
+    <div class="bottom">
 
         <textarea
                 id="message"
-                maxlength="500"
-                placeholder="Ask me anything..."></textarea>
+                placeholder="Ask anything..."
+                maxlength="1000"></textarea>
 
         <button onclick="askAI()">
-            🚀 Ask AI
-        </button>
 
-        <div id="response">
-            Your AI response will appear here...
-        </div>
+            ➜
+
+        </button>
 
     </div>
 
