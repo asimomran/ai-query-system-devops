@@ -1,63 +1,67 @@
-.typing{
+const chat = document.getElementById("chat");
+const input = document.getElementById("message");
 
-    display:flex;
+input.addEventListener("keydown", function (event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        askAI();
+    }
+});
 
-    gap:6px;
+async function askAI() {
 
-    align-items:center;
+    const message = input.value.trim();
 
-}
+    if (message === "") return;
 
-.typing span{
+    chat.innerHTML += `
+        <div class="user-message">
+            ${message}
+        </div>
+    `;
 
-    width:10px;
+    input.value = "";
 
-    height:10px;
+    chat.scrollTop = chat.scrollHeight;
 
-    border-radius:50%;
+    const loadingId = "loading-" + Date.now();
 
-    background:#60a5fa;
+    chat.innerHTML += `
+        <div class="ai-message" id="${loadingId}">
+            <span class="typing">
+                <span></span>
+                <span></span>
+                <span></span>
+            </span>
+        </div>
+    `;
 
-    animation:typing 1.2s infinite;
+    chat.scrollTop = chat.scrollHeight;
 
-}
+    try {
 
-.typing span:nth-child(2){
+        const response = await fetch("/api/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: message
+            })
+        });
 
-    animation-delay:.2s;
+        const data = await response.json();
 
-}
+        document.getElementById(loadingId).innerHTML = data.response;
 
-.typing span:nth-child(3){
+    } catch (e) {
 
-    animation-delay:.4s;
+        document.getElementById(loadingId).innerHTML =
+            "<span style='color:#ef4444'>❌ Unable to connect to AI.</span>";
 
-}
-
-@keyframes typing{
-
-    0%{
-
-        opacity:.3;
-
-        transform:translateY(0);
+        console.error(e);
 
     }
 
-    50%{
-
-        opacity:1;
-
-        transform:translateY(-6px);
-
-    }
-
-    100%{
-
-        opacity:.3;
-
-        transform:translateY(0);
-
-    }
-
+    chat.scrollTop = chat.scrollHeight;
 }
