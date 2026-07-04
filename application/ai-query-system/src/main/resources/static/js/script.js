@@ -1,67 +1,98 @@
-const chat = document.getElementById("chat");
-const input = document.getElementById("message");
+const textarea = document.getElementById("message");
+const responseBox = document.getElementById("response");
+const button = document.getElementById("askButton");
 
-input.addEventListener("keydown", function (event) {
+textarea.addEventListener("keydown", function (event) {
+
     if (event.key === "Enter" && !event.shiftKey) {
+
         event.preventDefault();
         askAI();
+
     }
+
 });
 
 async function askAI() {
 
-    const message = input.value.trim();
+    const message = textarea.value.trim();
 
-    if (message === "") return;
+    if (message === "") {
 
-    chat.innerHTML += `
-        <div class="user-message">
-            ${message}
-        </div>
-    `;
+        alert("Please enter a question.");
+        return;
 
-    input.value = "";
+    }
 
-    chat.scrollTop = chat.scrollHeight;
+    button.disabled = true;
+    button.innerText = "Thinking...";
 
-    const loadingId = "loading-" + Date.now();
-
-    chat.innerHTML += `
-        <div class="ai-message" id="${loadingId}">
-            <span class="typing">
-                <span></span>
-                <span></span>
-                <span></span>
-            </span>
-        </div>
-    `;
-
-    chat.scrollTop = chat.scrollHeight;
+    responseBox.innerHTML = '<span class="loading">Generating response...</span>';
 
     try {
 
         const response = await fetch("/api/chat", {
+
             method: "POST",
+
             headers: {
                 "Content-Type": "application/json"
             },
+
             body: JSON.stringify({
                 message: message
             })
+
         });
+
+        if (!response.ok) {
+
+            throw new Error("HTTP " + response.status);
+
+        }
 
         const data = await response.json();
 
-        document.getElementById(loadingId).innerHTML = data.response;
+        // Supports either {response:"..."} or {answer:"..."}
+        const aiResponse = data.response || data.answer || "No response received.";
 
-    } catch (e) {
+        responseBox.innerHTML = formatResponse(aiResponse);
 
-        document.getElementById(loadingId).innerHTML =
-            "<span style='color:#ef4444'>❌ Unable to connect to AI.</span>";
+    } catch (error) {
 
-        console.error(e);
+        console.error(error);
+
+        responseBox.innerHTML =
+            '<span class="error">Unable to connect to the AI service.</span>';
 
     }
 
-    chat.scrollTop = chat.scrollHeight;
+    button.disabled = false;
+    button.innerText = "Ask AI";
+
+}
+
+function formatResponse(text) {
+
+    if (!text) return "";
+
+    let formatted = text;
+
+    // Escape HTML
+    formatted = formatted
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+
+    // Bold (**text**)
+    formatted = formatted.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+    // Inline code (`code`)
+    formatted = formatted.replace(/`([^`]+)`/g, "<code>$1</code>");
+
+    // New lines
+    formatted = formatted.replace(/\n/g, "<br>");
+
+    return formatted;
+
 }

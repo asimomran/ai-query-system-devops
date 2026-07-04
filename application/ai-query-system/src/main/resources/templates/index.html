@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="UTF-8">
@@ -13,50 +14,46 @@
 
 <body>
 
-<div class="background">
+<div class="page">
 
-    <span></span>
-    <span></span>
-    <span></span>
+    <div class="card">
 
-</div>
+        <div class="header">
 
-<div class="app">
+            <h1>AI Query System</h1>
 
-    <div class="top">
-
-        <h1>AI Query System</h1>
-
-        <p>Spring Boot • OpenRouter • DevOps Pipeline</p>
-
-    </div>
-
-    <div id="chat">
-
-        <div class="ai-message">
-
-            👋 Hello!
-
-            <br><br>
-
-            Ask me anything.
+            <p>Spring Boot • OpenRouter • DevOps Assignment</p>
 
         </div>
 
-    </div>
+        <div class="input-section">
 
-    <div class="bottom">
+            <label for="message">
+                Ask your question
+            </label>
 
-        <textarea
-                id="message"
-                placeholder="Ask anything..."
-                maxlength="1000"></textarea>
+            <textarea
+                    id="message"
+                    placeholder="Type your question here..."
+                    maxlength="1000"></textarea>
 
-        <button onclick="askAI()">
+            <button id="askButton" onclick="askAI()">
+                Ask AI
+            </button>
 
-            ➜
+        </div>
 
-        </button>
+        <div class="response-section">
+
+            <h2>Response</h2>
+
+            <div id="response">
+
+                Your AI response will appear here.
+
+            </div>
+
+        </div>
 
     </div>
 
@@ -65,4 +62,5 @@
 <script src="/js/script.js"></script>
 
 </body>
+
 </html>
