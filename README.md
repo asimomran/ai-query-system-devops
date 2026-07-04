@@ -163,6 +163,21 @@ The project follows basic cloud security best practices.
 
 ---
 
+## Deployment Verification
+
+The application was successfully deployed on an AWS EC2 instance using GitHub Actions.
+
+Evidence included in this repository:
+
+- Deployment workflow configuration
+- Successful GitHub Actions execution screenshot
+- EC2 deployment screenshots
+- CloudWatch monitoring screenshots
+- Load testing results
+- Architecture diagram
+
+For security reasons, AWS credentials and deployment secrets are not included in this repository.
+
 ## Future Improvements
 
 - Docker containerization
